@@ -1,0 +1,36 @@
+{
+    "name": "bitfinax-hero",
+    "version": "0.0.0",
+    "author": "Oscar Mesa",
+    "description": "Easy and reduced implementation of the bitfinex websocket V2 using events.",
+    "main": "src/index.js",
+    "keywords": [
+        "realtime",
+        "events",
+        "bitfinex"
+    ],
+    "scripts": {
+        "start": "node src/index.js",
+        "production": "NODE_ENV='production' node bin/index.js",
+        "test": "mocha"
+    },
+    "dependencies": {
+        "ws": "latest",
+        "lodash": "latest",
+        "crypto": "latest"
+    },
+    "devDependencies": {
+        "chai": "latest",
+        "chai-as-promised": "latest",
+        "eslint": "latest",
+        "eslint-config-airbnb": "latest",
+        "eslint-plugin-import": "latest",
+        "eslint-plugin-jsx-a11y": "latest",
+        "eslint-plugin-react": "latest",
+        "istanbul": "^1.1.0-alpha.1",
+        "mocha": "latest",
+        "mocha-lcov-reporter": "latest",
+        "proxyquire": "latest",
+        "sinon": "latest"
+    }
+}
