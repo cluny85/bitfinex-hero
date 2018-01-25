@@ -10,8 +10,8 @@
         "bitfinex"
     ],
     "scripts": {
-        "start": "node src/index.js",
-        "production": "NODE_ENV='production' node bin/index.js",
+        "start": "node src/bin/index.js",
+        "production": "NODE_ENV='production' node src/bin/index.js",
         "test": "mocha"
     },
     "dependencies": {
