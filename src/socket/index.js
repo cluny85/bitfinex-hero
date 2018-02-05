@@ -3,7 +3,7 @@ const WebSocket = require('ws');
 // const events = require('./eventActions');
 const getAuth       = require('../auth');
 const eventListener = require('../events/listener');
-const { emitAuth }  = require('../events/dispatcher');
+const { authEvent }  = require('../events/dispatcher');
 
 const { log, error } = console;
 
@@ -67,6 +67,8 @@ module.exports = () => {
         log('OPENED OK');
         isOpen = true;
         subscribeTicker('tIOTUSD');
+        subscribeTrades('tIOTUSD');
+        subscribeCandles('tIOTUSD');
         resolve();
       });
     });
@@ -168,7 +170,7 @@ module.exports = () => {
           eventListener.handleSubscribedEvents(msg);
         } else {
           // TODO: hacer algo con los tipos de eventos que traen en la segunda posicion un string tipo: ow
-          emitAuth(msg);
+          authEvent(msg);
         }
       }
       // ws: 'WALLET/SNAPSHOT',
@@ -189,6 +191,38 @@ module.exports = () => {
     };
     send(message);
   }
+
+  function subscribeTrades(currency) {
+    const message = {
+      event  : 'subscribe',
+      channel: 'trades',
+      symbol : currency
+    };
+    send(message);
+  }
+
+  function subscribeCandles(currency) {
+    const message = {
+      event  : 'subscribe',
+      channel: 'candles',
+      key    : `trade:1m:${currency}`
+    };
+    send(message);
+  }
+
+  function subscribeBook(currency) {
+    // https://bitfinex.readme.io/v2/reference#ws-public-order-books
+    const message = {
+      event  : 'subscribe',
+      channel: 'book',
+      symbol : currency
+      // prec   : PRECISION,
+      // freq   : FREQUENCY,
+      // len    : LENGTH Number of price points ("25", "100") [default="25"]
+    };
+    send(message);
+  }
+
 
   /**
    * Configures the seq flag to enable sequencing (packet number) for this

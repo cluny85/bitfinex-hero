@@ -1,4 +1,4 @@
-const { filterAuth } = require('../filter');
+const { filterEvent } = require('../filter');
 
 const callbacksSubscribed = [];
 
@@ -8,12 +8,12 @@ const callbacksSubscribed = [];
  */
 const subscribeEventEmiter = cb => callbacksSubscribed.push(cb);
 const emit                 = event => callbacksSubscribed.forEach(cb => cb(event));
-const emitAuth             = (message) => emit(filterAuth(message));
+const authEvent            = message => emit(filterEvent(message));
 const getSubscribedNumber  = () => callbacksSubscribed.length;
 
 module.exports = {
   subscribeEventEmiter,
   emit,
-  emitAuth,
+  authEvent,
   getSubscribedNumber
 };

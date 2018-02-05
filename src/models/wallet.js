@@ -1,12 +1,11 @@
 const walletTypes = ['exchange', 'margin', 'funding'];
-let types = {};
+const types = {};
 
-walletTypes.forEach((t) => {
-  types[t.toUpperCase()] = t;
+walletTypes.forEach((type) => {
+  types[type.toUpperCase()] = type;
 });
 
-
-const serialize = (data) => [
+const serialize = data => [
   data.type,
   data.currency,
   data.balance,
@@ -14,7 +13,7 @@ const serialize = (data) => [
   data.balanceAvailable
 ];
 
-const unserialize = (data) => ({
+const unserialize = data => ({
   type             : data[0],
   currency         : data[1],
   balance          : data[2],

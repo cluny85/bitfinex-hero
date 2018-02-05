@@ -10,11 +10,13 @@ const models = {
   // Notification : require('./notification'),
   // Order        : require('./order'),
   // Position     : require('./position'),
-  // Trade        : require('./trade'),
+  Trades       : require('./trades'),
   Wallet       : require('./wallet'),
   // Alert        : require('./alert'),
   Tick         : require('./tick'),
   Ticker       : require('./ticker'),
+  Book         : require('./book'),
+  Candles      : require('./candles'),
   // TradeTick    : require('./trade_tick'),
   // Candle       : require('./candle')
 };

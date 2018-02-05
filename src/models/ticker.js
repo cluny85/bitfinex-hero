@@ -1,32 +1,14 @@
-const serialize = (data) =>
-  (arr.length === 10)
-  ? [
-      data.bid,
-      data.bidSize,
-      data.ask,
-      data.askSize,
-      data.dailyChange,
-      data.dailyChangePerc,
-      data.lastPrice,
-      data.volume,
-      data.high,
-      data.low
-    ]
-  : [
-      data.frr,
-      data.bid,
-      data.bidPeriod,
-      data.bidSize,
-      data.ask,
-      data.askPeriod,
-      data.askSize,
-      data.dailyChange,
-      data.dailyChangePerc,
-      data.lastPrice,
-      data.volume,
-      data.high,
-      data.low
-    ];
+const validFields = ['frr', 'bid', 'bidSize', 'bidPeriod', 'ask', 'askSize', 'askPeriod', 'dailyChange', 
+  'dailyChangePerc', 'lastPrice', 'volume', 'high', 'low'];
+
+const serialize = (data) => {
+  const keys = Object.keys(data);
+  const result = [];
+  keys.forEach((item) => {
+    if (validFields[item]) result.push(item);
+  });
+  return result;
+};
 
 const unserialize = (data) => {
   const arr = data[1];

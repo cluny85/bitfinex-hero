@@ -42,7 +42,7 @@ function subscribe(message) {
   try {
     subscriptionsListeners[message.chanId] = {
       channel: message.channel,
-      symbol : message.symbol
+      symbol : message.symbol || message.key.split(':')[2]
     };
   } catch (err) {
     error('subscribe', err);

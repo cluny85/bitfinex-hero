@@ -1,19 +1,19 @@
 const subscribedTypes = require('./subscribed');
-const authTypes       = require('./auth');
+const eTypes          = require('./authEvents');
 
 const { log, error } = console;
 
 module.exports = {
   filterSubscribed,
-  filterAuth
+  filterEvent
 };
 
-function filterAuth(message) {
+function filterEvent(message) {
   const type = message[1];
   log('============= ', type);
   try {
-    return (authTypes[type])
-      ? authTypes[type](type, message)
+    return (eTypes[type])
+      ? eTypes[type](type, message)
       : {};
   } catch (err) {
     throw new Error('Auth event not founded: ', type);
