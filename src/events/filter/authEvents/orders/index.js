@@ -1,41 +1,24 @@
 const { Orders } = require('../../../../models');
 const { ORDERS } = require('../../../../events');
-// const authTypes = {
-//   ws: onWalletSnapshot,
-//   os: log
-// };
+
 const { log, error } = console;
 
 module.exports = {
-  on: onOrderNew,
-  ou: onOrderUpdate,
-  oc: onOrderCancel,
-  os: onOrdersSnapshot
+  on: onOrder.bind(this, ORDERS.NEW),
+  ou: onOrder.bind(this, ORDERS.UPDATE),
+  oc: onOrder.bind(this, ORDERS.CANCEL),
+  os: onOrder.bind(this, ORDERS.SNAPSHOT)
 };
 
-function onOrdersSnapshot(type, message) {
-  log('---', message);
+function onOrder(eventType, type, message) {
   try {
     const orders = Orders.unserialize(message);
-    const eventType = ORDERS.SNAPSHOT;
-    log('unserialize OrdersSnapshot: ', orders);
+    log(`unserialize Orders ${eventType}: `, orders);
     return constructEventMessage(eventType, orders);
   } catch (err) {
-    error('ERROR -- onOrdersSnapshot -- ', err);
+    error(`ERROR -- onOrder ${eventType} -- `, err);
     return {};
   }
-}
-
-function onOrderNew() {
-  return {};
-}
-
-function onOrderUpdate() {
-  return {};
-}
-
-function onOrderCancel() {
-  return {};
 }
 
 function constructEventMessage(type, payload) {
