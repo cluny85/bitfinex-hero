@@ -8,7 +8,7 @@ const models = {
   // FundingTrade : require('./funding_trade'),
   // MarginInfo   : require('./margin_info'),
   // Notification : require('./notification'),
-  // Order        : require('./order'),
+  Orders       : require('./orders'),
   // Position     : require('./position'),
   Trades       : require('./trades'),
   Wallet       : require('./wallet'),

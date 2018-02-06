@@ -1,4 +1,5 @@
 module.exports = {
   ...require('./trades'),
-  ...require('./wallet')
+  ...require('./wallet'),
+  ...require('./orders')
 };

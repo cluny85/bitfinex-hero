@@ -1,5 +1,5 @@
 const events = {};
-['ticker', 'trades', 'book', 'candles', 'wallet']
+['ticker', 'trades', 'book', 'candles', 'wallet', 'orders']
   .forEach((item) => { Object.assign(events, require(`./${item}`)) });
 
 module.exports = events;
