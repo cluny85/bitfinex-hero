@@ -1,5 +1,7 @@
 # Bitfinex-hero
 
+A realtime event based library for bitfinex API v2.
+
 Work in progress...
 
 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
@@ -40,6 +42,27 @@ try {
   const { subscribe, unsubscribe, actions, events } = bfx;
 } catch (error) {
 }
+```
+
+**subscribe, unsubscribe:** To start receiving events, just pass a single callback to the method subscribe:
+
+```javascript
+const callback = event => console.log(event);
+subscribe(callback);
+// to remove the callback listener:
+unsubscribe(callback);
+```
+
+**actions:** Check the _src/actions_ folder to keep tracking of the actions available. Ie:
+```javascript
+const order = {
+  type  : 'LIMIT',
+  symbol: 'tBTCUSD',
+  amount: 1,
+  price : 1
+};
+actions.order.buy(order);
+actions.order.cancel(orderId);
 ```
 
 ## Examples
