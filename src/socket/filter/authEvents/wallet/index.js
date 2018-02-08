@@ -1,5 +1,5 @@
 const { Wallet } = require('../../../../models');
-const { WALLET } = require('../../../index');
+const { WALLET } = require('../../../../events');
 // const authTypes = {
 //   ws: onWalletSnapshot,
 //   os: log

@@ -1,19 +1,30 @@
-const subscribe = require('./events/dispatcher').subscribeEventEmiter;
+const bfxWS = require('./socket');
+const bfxRest = require('./rest');
+
+const events  = require('./events');
+const actions = require('./actions');
 
 const { log, error } = console;
-subscribe((event) => log('*** dispatching callback señoreessss: ', event));
 
-
-module.exports = (config) => {
+module.exports = async (config) => {
   try {
-    const bfx = require('./socket')();
-    const ws = bfx.init(config.bitfinex);
-    // bfx.open();
-  } catch (err) {
-    console.log('FUUUUUUUCK ', err);
-  }
+    const ws = bfxWS();
+    const ok = await ws.init(config.bitfinex);
+    const { subscribe, unsubscribe } = ws;
+    // DEBUG
+    subscribe((event) => log('*** dispatching callback señoreessss: ', event));
+    // -----
+    const distpacher = ws.send;
+    const actionObjects = actions.init(distpacher);
 
-  return {
-    addEventListener: subscribe
-  };
+    return {
+      subscribe,
+      unsubscribe,
+      actions: actionObjects,
+      events
+    };
+  } catch (err) {
+    error('FUUUUUUUCK ', err);
+    throw new Error(err);
+  }
 };

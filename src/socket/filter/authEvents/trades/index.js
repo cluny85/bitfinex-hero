@@ -1,6 +1,6 @@
 // NOT AN AUTH EVENT -> POOR BITFINEX DESIGN
 const { Trades } = require('../../../../models');
-const { TRADES } = require('../../../index');
+const { TRADES } = require('../../../../events');
 
 const { log, error } = console;
 

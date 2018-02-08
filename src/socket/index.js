@@ -2,8 +2,9 @@ const _         = require('lodash');
 const WebSocket = require('ws');
 // const events = require('./eventActions');
 const getAuth       = require('../auth');
-const eventListener = require('../events/listener');
-const { authEvent }  = require('../events/dispatcher');
+const eventListener = require('./listener');
+const { authEvent, subscribe, unsubscribe } = require('./dispatcher');
+const defaultConfig = require('../config');
 
 const { log, error } = console;
 
@@ -19,6 +20,8 @@ module.exports = () => {
     close,
     isOpen,
     send,
+    subscribe,
+    unsubscribe
     // setEvents,
     // addListener,
     // removeListener,
@@ -31,12 +34,13 @@ module.exports = () => {
    * @param {} events Json object 
    * https://socket.io/docs/server-api/
    */
-  function init(bitfinexConfig) {
+  async function init(bitfinexConfig) {
     if (!config && !bitfinexConfig) throw new Error('[SOCKET IO] Failed to initializate the socket: there is no configuration or server.');
     if (bitfinexConfig) config = bitfinexConfig;
+    config = Object.assign(config, defaultConfig);
     ws = new WebSocket(config.ws.url);
     log('INIT DONE');
-    open();
+    const ok = await open();
     return ws;
   }
 
@@ -66,9 +70,9 @@ module.exports = () => {
         if (withAuth) auth().catch(err => log('Auth failed: ', err));
         log('OPENED OK');
         isOpen = true;
-        subscribeTicker('tIOTUSD');
-        subscribeTrades('tIOTUSD');
-        subscribeCandles('tIOTUSD');
+        // subscribeTicker('tIOTUSD');
+        // subscribeTrades('tIOTUSD');
+        // subscribeCandles('tIOTUSD');
         resolve();
       });
     });

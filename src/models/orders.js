@@ -38,16 +38,7 @@ const serialize = message =>
 
 const isSnapshot = data => Array.isArray(data);
 
-const unserialize = (data) => {
-  const arr = data[2];
-  if (isSnapshot(arr[0])) {
-    const result = [];
-    arr.forEach((item) => {
-      result.push(unserialize(item));
-    });
-    return result;
-  }
-
+const unserializeArray = (data) => {
   const result = {};
   for (let i = 0; i < data.length; i++) {
     if (validFields[i] !== null && validFields[i]) {
@@ -57,6 +48,19 @@ const unserialize = (data) => {
     }
   }
   return result;
+};
+
+const unserialize = (data) => {
+  const arr = data[2];
+  console.log('isSnapshot: ', isSnapshot(arr[0]));
+  if (isSnapshot(arr[0])) {
+    const result = [];
+    arr.forEach((item) => {
+      result.push(unserializeArray(item));
+    });
+    return result;
+  }
+  return unserializeArray(arr);
 };
 
 module.exports = {
