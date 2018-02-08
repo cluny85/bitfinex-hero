@@ -12,7 +12,7 @@
     "scripts": {
         "start": "node src/bin/index.js",
         "production": "NODE_ENV='production' node src/bin/index.js",
-        "test": "mocha"
+        "test": "mocha -R spec src/**/*.test.js"
     },
     "dependencies": {
         "ws": "latest",

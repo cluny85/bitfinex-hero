@@ -61,5 +61,5 @@ typings/
 .DS_Store
 
 # Config files with important keys
-src/config/local.js
-src/config/production.js
+config/local.js
+config/production.js
