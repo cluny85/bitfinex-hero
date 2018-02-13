@@ -1,5 +1,5 @@
 {
-    "name": "bitfinax-hero",
+    "name": "bitfinex-hero",
     "version": "0.0.1",
     "author": "Oscar Mesa",
     "description": "Easy and reduced implementation of the bitfinex websocket V2 using events.",
