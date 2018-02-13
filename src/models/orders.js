@@ -44,7 +44,9 @@ const unserializeArray = (data) => {
     if (validFields[i] !== null && validFields[i]) {
       result[validFields[i]] = (i === 23 || i === 24)
         ? data[i] === 1
-        : data[i];
+        : (i === 3)
+          ? data[i].split('t')[1]
+          : data[i];
     }
   }
   return result;

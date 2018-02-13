@@ -7,7 +7,7 @@ function formatTrades(eventType, message) {
   const payload = Trades.unserialize(message);
   const result = {
     type  : TRADES.SNAPSHOT,
-    symbol: eventType.symbol,
+    symbol: eventType.symbol.split('t')[1],
     payload
   };
   return result;

@@ -69,12 +69,12 @@ function newOrder(order, isSell) {
   assertOrderParams(order);
   const cid = Date.now();
   const amount = isSell ? `${-order.amount}` : `${+order.amount}`;
-  return Object.assign(order, { cid, price: `${order.price}`, amount });
+  return Object.assign(order, { cid, price: `${order.price}`, amount, symbol: `t${order.symbol}` });
 }
 
 function assertOrderParams(order) {
   const { symbol, price, amount, type } = order;
-  if (!symbol  || symbol.length < 7
+  if (!symbol  || symbol.length < 6
     || !price  || price <= 0
     || !amount || amount <= 0
     || !type   || types.indexOf(type) < 0)

@@ -7,7 +7,7 @@ function formatCandles(eventType, message) {
   const payload = Candles.unserialize(message);
   const result = {
     type  : CANDLES.UPDATE,
-    symbol: eventType.symbol,
+    symbol: eventType.symbol.split('t')[1],
     payload
   };
   return result;

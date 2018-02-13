@@ -1,12 +1,13 @@
-const _         = require('lodash');
 const WebSocket = require('ws');
 // const events = require('./eventActions');
 const getAuth       = require('../auth');
 const eventListener = require('./listener');
 const { authEvent, subscribe, unsubscribe } = require('./dispatcher');
+const subscribers   = require('./subscribers');
 const defaultConfig = require('../config');
 
 const { log, error } = console;
+const publicSubscribers = ['Ticker', 'Trades', 'Candles']; // , 'Book'];
 
 module.exports = () => {
   let ws;
@@ -21,7 +22,12 @@ module.exports = () => {
     isOpen,
     send,
     subscribe,
-    unsubscribe
+    unsubscribe,
+    subscribeAllFor,
+    subscribeTicker,
+    subscribeTrades,
+    subscribeCandles,
+    subscribeBook
     // setEvents,
     // addListener,
     // removeListener,
@@ -56,10 +62,6 @@ module.exports = () => {
     }
     log('OPENING...');
 
-    // if (seqAudit) {
-    //   ws.once('open', enableSequencing.bind(this))
-    // }
-
     ws.on('message', onMessage);
     // ws.on('open', onWSOpen);
     // ws.on('error', onWSError);
@@ -67,6 +69,7 @@ module.exports = () => {
 
     return new Promise((resolve, reject) => {
       ws.once('open', () => {
+        // TODO: launch error if auth fail
         if (withAuth) auth().catch(err => log('Auth failed: ', err));
         log('OPENED OK');
         isOpen = true;
@@ -186,47 +189,34 @@ module.exports = () => {
     }
   }
 
-  ///// TICKER
+  function subscribeAllFor(currency) {
+    publicSubscribers.forEach((item) => {
+      const message = subscribers[item](currency);
+      send(message);
+    });
+  }
+
   function subscribeTicker(currency) {
-    const message = {
-      event  : 'subscribe',
-      channel: 'ticker',
-      symbol : currency
-    };
+    const message = subscribers.Ticker(currency);
     send(message);
   }
 
   function subscribeTrades(currency) {
-    const message = {
-      event  : 'subscribe',
-      channel: 'trades',
-      symbol : currency
-    };
+    const message = subscribers.Trades(currency);
     send(message);
   }
 
-  function subscribeCandles(currency) {
-    const message = {
-      event  : 'subscribe',
-      channel: 'candles',
-      key    : `trade:1m:${currency}`
-    };
+  function subscribeCandles(currency, time) {
+    const message = subscribers.Candles(currency, time);
     send(message);
   }
 
   function subscribeBook(currency) {
+    // TODO
     // https://bitfinex.readme.io/v2/reference#ws-public-order-books
-    const message = {
-      event  : 'subscribe',
-      channel: 'book',
-      symbol : currency
-      // prec   : PRECISION,
-      // freq   : FREQUENCY,
-      // len    : LENGTH Number of price points ("25", "100") [default="25"]
-    };
-    send(message);
+    // const message = subscribers.Book(currency);
+    // send(message);
   }
-
 
   /**
    * Configures the seq flag to enable sequencing (packet number) for this

@@ -43,7 +43,7 @@ describe('Bitfinex-hero integration test', () => {
 
     const order = {
       type  : 'LIMIT',
-      symbol: 'tBTCUSD',
+      symbol: 'BTCUSD',
       amount: 1,
       price : 1
     };

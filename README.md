@@ -19,7 +19,7 @@ npm install --save bitfinex-hero
 ### Configuration
 First thing you need is to pass your Bitfinex API key to create a bitfinex-hero instance. The format of this config looks like:
 
-```json
+```javascript
 bitfinex: {
   apiKey   : '',
   apiSecret: ''
@@ -53,6 +53,26 @@ subscribe(callback);
 unsubscribe(callback);
 ```
 
+**subscribe for public events** This is the list of methods you can call to start retreiving information of an specific currency:
+
+- subscribeAllFor(currency): To start receiving events form all the public channels of the currency given.
+
+- subscribeTicker(currency): To start receiving events form Ticker public channel of the currency gived.
+
+- subscribeTrades(currency): To start receiving events form Trades public channel of the currency gived.
+
+- subscribeCandles(currency): To start receiving events form Candles public channel of the currency gived.
+
+- subscribeBook(currency): To start receiving events form OrderBook public channel of the currency gived.
+
+**IMPORTANT:** The currency value has to be a string like this: 'BTCUSD' or 'ETHUSD'
+
+Ie:
+```javascript
+const { subscribeAllFor } = bfx;
+subscribeAllFor('BTCUSD');
+```
+
 **actions:** Check the _src/actions_ folder to keep tracking of the actions available. Ie:
 ```javascript
 const order = {
@@ -80,8 +100,12 @@ and much more...
 
 - Ethereum wallet:
 
+```
 0xa653163B1D1Da5Ff8606e0b57beDC6C88fa83730
+```
 
 - Monero wallet:
 
+```
 4GdoN7NCTi8a5gZug7PrwZNKjvHFmKeV11L6pNJPgj5QNEHsN6eeX3DaAQFwZ1ufD4LYCZKArktt113W7QjWvQ7CW9tZ4FFgowFHYgv7tm
+```

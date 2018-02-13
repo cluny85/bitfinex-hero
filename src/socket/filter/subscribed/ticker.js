@@ -7,7 +7,7 @@ function formatTicker(eventType, message) {
   const payload = Ticker.unserialize(message);
   const result = {
     type  : TICKER.UPDATE,
-    symbol: eventType.symbol,
+    symbol: eventType.symbol.split('t')[1],
     payload
   };
   return result;
